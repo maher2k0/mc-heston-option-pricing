@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b059ec4 (m)
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -169,8 +172,12 @@ cython_debug/
 #.idea/
 
 # PyPI configuration file
+<<<<<<< HEAD
 .pypirc
 =======
 playground.ipynb
 test.ipynb
 >>>>>>> cbb3fb2 (Initial commit)
+=======
+.pypirc
+>>>>>>> b059ec4 (m)

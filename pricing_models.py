@@ -88,18 +88,24 @@ class OptionPricer(HestonModel):
         self.option_type = option_type
         self.pricer = pricer
 
-    def MC_call_pricing(self, trading_days, strike):
+    def MC_call_pricing(self, trading_days, strike, T):
         """Heston Monte Carlo pricing of European call options"""
         S_T = np.array([x[trading_days-1] for x in self.S])
         call_payoffs = np.maximum(S_T - strike, 0)
         call_price = np.mean(call_payoffs)
+
+        # Calculate discounted expected payoff
+        call_price = call_price * np.exp(-self.r*T)
         return call_price
     
-    def MC_put_prices(self, trading_days, strike):
+    def MC_put_prices(self, trading_days, strike, T):
         """Heston Monte Carlo pricing of European put options"""
         S_T = np.array([x[trading_days-1] for x in self.S])
         put_payoffs = np.maximum(strike - S_T, 0)
         put_price = np.mean(put_payoffs)
+
+        # Calculate discounted expected payoff
+        put_price = put_price * np.exp(-self.r*T)
         return put_price
     
     def BS_CALL(self, T, K):
@@ -123,10 +129,10 @@ class OptionPricer(HestonModel):
             option_prices = [self.heston_option_price(K, T) for K in strikes]
 
         elif self.pricer == 'monte_carlo' and self.option_type == 'call':
-            option_prices = [self.MC_call_pricing(trading_days, K) for K in strikes]
+            option_prices = [self.MC_call_pricing(trading_days, K, T) for K in strikes]
         
         elif self.pricer == 'monte_carlo' and self.option_type == 'put':
-            option_prices = [self.MC_put_prices(trading_days, K) for K in strikes]
+            option_prices = [self.MC_put_prices(trading_days, K, T) for K in strikes]
         
         elif self.pricer == 'black_scholes' and self.option_type == 'call':
             option_prices = [self.BS_CALL(T, K) for K in strikes]

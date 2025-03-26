@@ -4,6 +4,7 @@ from scipy.optimize import minimize
 import warnings
 from scipy.stats import norm
 from typing import List
+from scipy.optimize import brentq
 
 
 class HestonModel:
@@ -72,10 +73,11 @@ class HestonModel:
 
         # Vectorized Euler-Maruyama method
         for i in range(N):
-            V[:, i+1] = V[:, i] + self.kappa * (self.theta - V[:, i]) * dt + self.sigma * np.sqrt(V[:, i]) * dW2[:, i]
-            # Ensure volatility stays positive
+            V[:, i+1] = V[:, i] + self.kappa * (self.theta - np.maximum(V[:, i], 0)) * dt + self.sigma * np.sqrt(np.maximum(V[:, i], 0)) * dW2[:, i]
+            # Use full truncation scheme to ensure volatility stays positive
             V[:, i+1] = np.maximum(V[:, i+1], 0)
             S[:, i+1] = S[:, i] * (1 + mu * dt + np.sqrt(V[:, i]) * dW1[:, i])
+            #S[:, i+1] = S[:, i] * np.exp((mu - 0.5 * V[:, i]) * dt + np.sqrt(V[:, i]) * np.sqrt(dt) * dW1[:, i])
 
         return S, V
     
@@ -141,6 +143,7 @@ class OptionPricer(HestonModel):
             option_prices = [self.BS_PUT(T, K) for K in strikes]
 
         return option_prices
+    
             
 
 class MLEOptimizer:

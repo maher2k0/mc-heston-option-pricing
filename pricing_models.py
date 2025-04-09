@@ -62,8 +62,8 @@ class HestonModel:
         """Monte Carlo simulation of the Heston Model"""
         dt = T/N # Time step size
         # Generate correlated Brownian motions for all simulations at once
-        dW2 = np.random.normal(0, np.sqrt(dt), size=(num_sims, N))
-        dW1 = self.rho * dW2 + np.sqrt(1 - self.rho**2) * np.random.normal(0, np.sqrt(dt), size=(num_sims, N))
+        dW2 = np.random.normal(0, 1, size=(num_sims, N))
+        dW1 = self.rho * dW2 + np.sqrt(1 - self.rho**2) * np.random.normal(0, 1, size=(num_sims, N))
 
         # Initialize arrays for stock prices and volatilities
         S = np.zeros((num_sims, N+1))
@@ -73,10 +73,10 @@ class HestonModel:
 
         # Vectorized Euler-Maruyama method
         for i in range(N):
-            V[:, i+1] = V[:, i] + self.kappa * (self.theta - np.maximum(V[:, i], 0)) * dt + self.sigma * np.sqrt(np.maximum(V[:, i], 0)) * dW2[:, i]
+            V[:, i+1] = V[:, i] + self.kappa * (self.theta - np.maximum(V[:, i], 0)) * dt + self.sigma * np.sqrt(np.maximum(V[:, i], 0)) * dW2[:, i] * np.sqrt(dt)
             # Use full truncation scheme to ensure volatility stays positive
             V[:, i+1] = np.maximum(V[:, i+1], 0)
-            S[:, i+1] = S[:, i] * (1 + mu * dt + np.sqrt(V[:, i]) * dW1[:, i])
+            S[:, i+1] = S[:, i] * (1 + mu * dt + np.sqrt(V[:, i]) * dW1[:, i] * np.sqrt(dt))
             #S[:, i+1] = S[:, i] * np.exp((mu - 0.5 * V[:, i]) * dt + np.sqrt(V[:, i]) * np.sqrt(dt) * dW1[:, i])
 
         return S, V

@@ -1,5 +1,5 @@
 # **Option Pricing with Monte Carlo Simulation using the Heston Model**
-This project implements a Monte Carlo (MC) simulation using the **Heston stochastic volatility model** to price European call options. Additionally, it compares the results with the **closed-form option valuation scheme** from Heston and Nandi (2000), the **Black-Scholes model**, and **real option prices** obtained from Yahoo Finance.
+This project implements a Monte Carlo (MC) simulation using the **Heston stochastic volatility model** to price European call and put options. Additionally, it compares the results with the **closed-form option valuation scheme** from Heston and Nandi (2000), the **Black-Scholes model**, and **real option prices** obtained from Yahoo Finance.
 A **Maximum Likelihood Estimation (MLE)** scheme is used to estimate the Heston Model parameters for calibration to market data of any specific stock.
 
 # 🚀 **Project Overview**
@@ -9,7 +9,11 @@ The goal of this project is to explore and compare different methods for pricing
 2. **Closed-Form Option Valuation (Heston and Nandi, 2000)**: Implementation of the analytical solution for option pricing under the Heston and Nandi framework.
 3. **Black-Scholes Model**: A benchmark comparison using the classic Black-Scholes option pricing formula.
 4. **Real Option Prices**: Validation of the models using real-world option prices from Yahoo Finance.
-5. **Parameter Estimation using Maximum Likelihood Estimation (MLE)**: Estimation of the Heston model parameters (e.g., mean reversion rate, long-term volatility, volatility of volatility and correlation coefficient) using historical asset price data.
+5. **Parameter Estimation using Maximum Likelihood Estimation (MLE)**: Estimation of the Heston model parameters:
+   - Mean reversion rate (κ)
+   - Long-term average volatility (θ)
+   - Volatility of volatility (σ)
+   - Correlation coefficient (ρ)
 
 # 📊 **Features**
 ✅ Monte Carlo simulations with the Heston model  
@@ -18,6 +22,7 @@ The goal of this project is to explore and compare different methods for pricing
 ✅ Real option data retrieval and comparison from Yahoo Finance  
 ✅ MLE-based parameter estimation for the Heston model using historical data  
 ✅ Visualization of price differences, model performance, and parameter fits  
+✅ Volatility smile analysis for different pricing models  
 
 ## 📦 **Dependencies**  
 The project uses the following Python packages:  
@@ -32,13 +37,25 @@ The project uses the following Python packages:
   - `scipy.integrate.quad` – Integration  
   - `scipy.optimize.minimize` – Optimization  
   - `scipy.stats.norm` – Statistical functions  
+  - `scipy.optimize.brentq` – Root finding  
 - `warnings` – Warning management  
 - `typing` – Type hinting support  
-- **Custom modules**:  
-  - `utils` – Data processing functions (`process_asset_data`, `process_treasury_data`, `calculate_rolling_volatility`)  
-  - `pricing_models` – Pricing models (`HestonModel`, `OptionPricer`)
 
-See requirements.txt file for package versions used.
+## 📁 **Project Structure**
+- `pricing_models.py`: Contains the core pricing models including:
+  - `HestonModel`: Implements the Heston stochastic volatility model
+  - `OptionPricer`: Handles option pricing using different methods
+  - `MLEOptimizer`: Performs parameter estimation using MLE
+- `utils.py`: Utility functions for data processing and analysis
+- `playground.ipynb`: Jupyter notebook for interactive exploration and testing
+- `option_analysis.ipynb`: Notebook for analyzing option prices and volatility surfaces
+- `requirements.txt`: List of Python package dependencies
 
 ## 📝 **References**  
 - S. Heston and S. Nandi, “A Closed-Form GARCH Option Valuation Model.” The Review of Financial Studies (2000), 13, 585-625.
+
+## 🤝 **Contributing**
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 **License**
+This project is licensed under the MIT License - see the LICENSE file for details.

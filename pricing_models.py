@@ -91,7 +91,7 @@ class OptionPricer(HestonModel):
     def MC_call_pricing(self, S, trading_days, strike):
         """Heston Monte Carlo pricing of European call options"""
         S_T = np.array([x[trading_days-1] for x in S])
-        call_payoffs = np.maximum(S_T - strike, 0)
+        call_payoffs = np.maximum(S_T - strike, 1e-15)
         call_price = np.mean(call_payoffs)
 
         # Calculate discounted expected payoff

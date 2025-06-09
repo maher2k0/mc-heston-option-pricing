@@ -1,6 +1,8 @@
-# **Option Pricing with Monte Carlo Simulation using the Heston Model**
+# **Option Pricing with the Heston Model**
 This project implements a Monte Carlo (MC) simulation using the **Heston stochastic volatility model** to price European call and put options. Additionally, it compares the results with the **closed-form option valuation scheme** from Heston and Nandi (2000), the **Black-Scholes model**, and **real option prices** obtained from Yahoo Finance.
 A **Maximum Likelihood Estimation (MLE)** scheme is used to estimate the Heston Model parameters for calibration to market data of any specific stock.
+
+📄 This repository is part of a project on option pricing with the Heston Model. The blog posts covering the theory, implementation and discussion of results can be found here: [**Part 1**](https://medium.com/@uddin.maher/option-pricing-with-the-heston-model-part-1-heston-model-theory-8b9950620a60) and [**Part 2**](https://medium.com/@uddin.maher/option-pricing-with-the-heston-model-part-2-parameter-estimation-monte-carlo-simulations-2a7be6e00cf2)
 
 # 🚀 **Project Overview**
 The goal of this project is to explore and compare different methods for pricing European call options. The primary focus is on the Heston model, which incorporates stochastic volatility to better capture market dynamics compared to the constant volatility assumption in the Black-Scholes model. The project includes:
@@ -53,6 +55,7 @@ The project uses the following Python packages:
 
 ## 📝 **References**  
 - S. Heston and S. Nandi, “A Closed-Form GARCH Option Valuation Model.” The Review of Financial Studies (2000), 13, 585-625.
+- R. Dunn, P. Hauser, T. Seibold and H. Gong, "Estimating Option Prices with Heston’s Stochastic Volatility Model" Valparaiso University (2014)
 
 ## 🤝 **Contributing**
 Contributions are welcome! Please feel free to submit a Pull Request.
